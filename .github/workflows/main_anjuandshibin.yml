@@ -11,7 +11,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Upload static HTML artifact
         uses: actions/upload-artifact@v3
@@ -23,7 +24,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: static-html
-      
+          path: downloaded-static-html
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
@@ -37,4 +39,4 @@ jobs:
         with:
           app-name: 'anjuandshibin'
           slot-name: 'production'
-          package: ${{ runner.temp }}/static-html
+          package: downloaded-static-html
